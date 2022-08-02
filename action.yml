@@ -1,0 +1,13 @@
+name: "Balto - SyntaxTree"
+description: "Run stree on your changed files"
+runs:
+  using: node12
+  main: main.js
+branding:
+  icon: life-buoy
+  color: orange
+inputs:
+  smartGemInstall:
+    description: Whether to try and install the fewest gems required to run SyntaxTree. When "false" it will run a full `bundle install`.
+    required: false
+    default: "true"
