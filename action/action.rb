@@ -76,7 +76,7 @@ changed_files_cmd = "git diff --name-only #{compare_sha} --diff-filter AM"
 puts "Looking for changed files..."
 debug "command: #{changed_files_cmd}"
 changed_ruby_files = `#{changed_files_cmd}`.each_line(chomp: true).select { |f| RubyFileMatcher.match?(f) }
-debug "Found files: #{changed_ruby_files}"
+debug "changed ruby files: #{changed_ruby_files}"
 
 stree_cmd = "#{stree_exe} write #{changed_ruby_files.join(" ")}"
 puts "Running stree write..."
