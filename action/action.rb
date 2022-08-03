@@ -61,14 +61,26 @@ class RubyFileMatcher
   end
 end
 
+def debug(msg)
+  if ENV['ACTIONS_STEP_DEBUG'].to_s.downcase == "true"
+    puts msg
+  end
+end
+
 event = JSON.parse(
   File.read(ENV["GITHUB_EVENT_PATH"]),
   object_class: OpenStruct
 )
 compare_sha = event.pull_request.base.sha
-stree_cmd = ENV['INPUT_SMARTGEMINSTALL'].to_s.downcase == "false" ? "bundle exec stree" : "stree"
+stree_exe = ENV['INPUT_SMARTGEMINSTALL'].to_s.downcase == "false" ? "bundle exec stree" : "stree"
 
-changed_files = `git diff --name-only #{compare_sha} --diff-filter AM`
-changed_ruby_files = changed_files.each_line(chomp: true).select { |f| RubyFileMatcher.match?(f) }
+changed_files_cmd = "git diff --name-only #{compare_sha} --diff-filter AM"
+puts "Looking for changed files..."
+debug "command: #{changed_files_cmd}"
+changed_ruby_files = `#{changed_files_cmd}`.each_line(chomp: true).select { |f| RubyFileMatcher.match?(f) }
+debug "Found files: #{changed_ruby_files}"
 
-`#{stree_cmd} write #{changed_ruby_files.join(" ")}`
+stree_cmd = "#{stree_exe} write #{changed_ruby_files.join(" ")}"
+puts "Running stree write..."
+debug "command: #{stree_cmd}"
+`#{stree_cmd}`
