@@ -62,9 +62,7 @@ class RubyFileMatcher
 end
 
 def debug(msg)
-  if ENV['ACTIONS_STEP_DEBUG'].to_s.downcase == "true"
-    puts msg
-  end
+  puts "::debug::#{msg}"
 end
 
 event = JSON.parse(
