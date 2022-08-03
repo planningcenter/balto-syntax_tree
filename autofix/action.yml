@@ -1,0 +1,21 @@
+name: "Balto SyntaxTree Auto-Fix"
+description: "Run stree, commit any changes, and add formatting commit to .git-blame-ignore-revs"
+runs:
+  using: "composite"
+  steps:
+    - uses: planningcenter/balto-syntax_tree@main
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      id: balto-syntax_tree-commit
+      with:
+        commit_message: Formatting by balto-syntax_tree
+    - uses: planningcenter/balto-syntax_tree/append-to-file@main
+      if: steps.balto-syntax_tree-commit.outputs.changes_detected == 'true'
+      with:
+        filepath: ${{ github.workspace}}/.git-blame-ignore-revs
+        contents: |-
+          # balto-syntax_tree PR #${{ github.event.number }}
+          ${{ steps.balto-syntax_tree-commit.outputs.commit_hash }}
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Add format commit to .git-blame-ignore-revs
+
