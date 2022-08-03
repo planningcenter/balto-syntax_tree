@@ -78,7 +78,11 @@ debug "command: #{changed_files_cmd}"
 changed_ruby_files = `#{changed_files_cmd}`.each_line(chomp: true).select { |f| RubyFileMatcher.match?(f) }
 debug "changed ruby files: #{changed_ruby_files}"
 
-stree_cmd = "#{stree_exe} write #{changed_ruby_files.join(" ")}"
-puts "Running stree write..."
-debug "command: #{stree_cmd}"
-`#{stree_cmd}`
+if changed_ruby_files.any?
+  stree_cmd = "#{stree_exe} write #{changed_ruby_files.join(" ")}"
+  puts "Running `stree write`..."
+  debug "command: #{stree_cmd}"
+  `#{stree_cmd}`
+else
+  puts "No Ruby files were changed. Skipping `stree write`!"
+end
