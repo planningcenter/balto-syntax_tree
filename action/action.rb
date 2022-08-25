@@ -82,7 +82,7 @@ if changed_ruby_files.any?
   stree_cmd = "#{stree_exe} write #{changed_ruby_files.join(" ")}"
   puts "Running `stree write`..."
   debug "command: #{stree_cmd}"
-  `#{stree_cmd}`
+  Bundler.with_original_env { `#{stree_cmd}` }
 else
   puts "No Ruby files were changed. Skipping `stree write`!"
 end
