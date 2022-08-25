@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.0.1] - 2022-08-25
+
+- Fix stree command when using smart gem install (default)
+
 ## [1.0.0] - 2022-08-03
 
 - Initial release
