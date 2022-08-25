@@ -1,6 +1,8 @@
+#!/usr/bin/env ruby
+
 require "ostruct"
 
-require_relative "./install_gems"
+require_relative "./action_utils"
 
 class RubyFileMatcher
   # From https://github.com/github/linguist/blob/master/lib/linguist/languages.yml
@@ -61,27 +63,22 @@ class RubyFileMatcher
   end
 end
 
-def debug(msg)
-  puts "::debug::#{msg}"
-end
-
 event = JSON.parse(
   File.read(ENV["GITHUB_EVENT_PATH"]),
   object_class: OpenStruct
 )
 compare_sha = event.pull_request.base.sha
-stree_exe = ENV['INPUT_SMARTGEMINSTALL'].to_s.downcase == "false" ? "bundle exec stree" : "stree"
 
 changed_files_cmd = "git diff --name-only #{compare_sha} --diff-filter AM"
 puts "Looking for changed files..."
-debug "command: #{changed_files_cmd}"
+ActionUtils.debug "command: #{changed_files_cmd}"
 changed_ruby_files = `#{changed_files_cmd}`.each_line(chomp: true).select { |f| RubyFileMatcher.match?(f) }
-debug "changed ruby files: #{changed_ruby_files}"
+ActionUtils.debug "changed ruby files: #{changed_ruby_files}"
 
 if changed_ruby_files.any?
-  stree_cmd = "#{stree_exe} write #{changed_ruby_files.join(" ")}"
+  stree_cmd = "bundle exec stree write #{changed_ruby_files.join(" ")}"
   puts "Running `stree write`..."
-  debug "command: #{stree_cmd}"
+  ActionUtils.debug "command: #{stree_cmd}"
   `#{stree_cmd}`
 else
   puts "No Ruby files were changed. Skipping `stree write`!"

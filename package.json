@@ -9,6 +9,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@actions/exec": "^1.1.1"
+    "@actions/core": "^1.9.1",
+    "@actions/exec": "^1.1.1",
+    "@actions/io": "^1.1.2"
   }
 }

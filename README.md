@@ -36,9 +36,3 @@ jobs:
 ### Other Languages
 
 While SyntaxTree does support [languages](https://github.com/ruby-syntax-tree/syntax_tree#languages) other than Ruby, this action does not support those at this time. Everything is very focused on Ruby files. If you need additional language support, feel free to open an issue to discuss or suggest a change with a pull request.
-
-## Inputs
-
-| Name | Description | Required | Default |
-|:-:|:-:|:-:|:-:|
-| `smartGemInstall` | Whether to try and install the fewest gems required to run RuboCop. When `"false"` it will run a full `bundle install`. | no | `"true"` |
