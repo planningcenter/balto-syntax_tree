@@ -3,7 +3,7 @@ description: "Run stree, commit any changes, and add formatting commit to .git-b
 runs:
   using: "composite"
   steps:
-    - uses: planningcenter/balto-syntax_tree@v1
+    - uses: planningcenter/balto-syntax_tree@halloffame-patch-1
     - uses: stefanzweifel/git-auto-commit-action@v4
       id: balto-syntax_tree-commit
       with:
