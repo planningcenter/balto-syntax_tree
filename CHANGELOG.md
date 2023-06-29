@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.0.2] - 2023-06-29
+
+- Create CODEOWNERS (#1)
+- Require json in action.rb (#2)
+
 ## [1.0.1] - 2022-08-25
 
 - Fix stree command when using smart gem install (default)
