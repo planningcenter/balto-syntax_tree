@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [Unreleased]
+**Note:** changes since v1.0.2 can be found on the [releases page](https://github.com/planningcenter/balto-syntax_tree/releases)
 
 ## [1.0.2] - 2023-06-29
 
